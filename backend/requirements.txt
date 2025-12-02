@@ -1,0 +1,13 @@
+streamlit
+langgraph
+langchain
+langchain-community
+chromadb
+
+fastapi
+uvicorn
+paramiko
+python-multipart
+pydantic
+openai
+tiktoken

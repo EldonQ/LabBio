@@ -1,0 +1,480 @@
+﻿　　#激活obitools
+     conda activate obi3
+     
+     #有多少个库就开多少个终端
+     #准备map文件（没有表头）第一列不用管，第二列开始（样点命名、barcode、上引物、下引物）引物长度不能超过36bp。
+     #导入数据(同一个文件的R1、R2命名为相同的JC+数字)
+     #出现一个JC1.obidims和JC2.obidims
+     #2021年
+     obi import SQ25030861-5CV1-5CV1_combined_R1.fastq.gz JC1/r1
+     obi import SQ25030861-5CV1-5CV1_combined_R2.fastq.gz JC1/r2
+     
+     obi import SQ25030862-5CV2-5CV2_combined_R1.fastq.gz JC2/r1
+     obi import SQ25030862-5CV2-5CV2_combined_R2.fastq.gz JC2/r2
+     
+     obi import SQ25030863-5CV3-5CV3_combined_R1.fastq.gz JC3/r1
+     obi import SQ25030863-5CV3-5CV3_combined_R2.fastq.gz JC3/r2
+     
+     obi import SQ25030864-5CV4-5CV4_combined_R1.fastq.gz JC4/r1
+     obi import SQ25030864-5CV4-5CV4_combined_R2.fastq.gz JC4/r2
+     
+     obi import GZ24053819-1F5-1F5_combined_R1.fastq.gz JC5/r1
+     obi import GZ24053819-1F5-1F5_combined_R2.fastq.gz JC5/r2
+     
+     obi import GZ24053820-1F6-1F6_combined_R1.fastq.gz JC6/r1
+     obi import GZ24053820-1F6-1F6_combined_R2.fastq.gz JC6/r2
+     
+     obi import GZ24053821-1F7-1F7_combined_R1.fastq.gz JC7/r1
+     obi import GZ24053821-1F7-1F7_combined_R2.fastq.gz JC7/r2
+     
+     obi import GZ24053822-1F8-1F8_combined_R1.fastq.gz JC8/r1
+     obi import GZ24053822-1F8-1F8_combined_R2.fastq.gz JC8/r2
+     
+     obi import GZ24053832-1F9-1F9_combined_R1.fastq.gz JC9/r1
+     obi import GZ24053832-1F9-1F9_combined_R2.fastq.gz JC9/r2
+     
+     
+
+     #2022年
+     obi import GZ24053777-2F1-2F1_combined_R1.fastq.gz JC21/r1
+     obi import GZ24053777-2F1-2F1_combined_R2.fastq.gz JC21/r2
+     
+     obi import GZ24053778-2F2-2F2_combined_R1.fastq.gz JC22/r1
+     obi import GZ24053778-2F2-2F2_combined_R2.fastq.gz JC22/r2
+     
+     obi import GZ24053779-2F3-2F3_combined_R1.fastq.gz JC23/r1
+     obi import GZ24053779-2F3-2F3_combined_R2.fastq.gz JC23/r2
+     
+     obi import GZ24053780-2F4-2F4_combined_R1.fastq.gz JC24/r1
+     obi import GZ24053780-2F4-2F4_combined_R2.fastq.gz JC24/r2
+     
+     obi import GZ24053781-2F5-2F5_combined_R1.fastq.gz JC25/r1
+     obi import GZ24053781-2F5-2F5_combined_R2.fastq.gz JC25/r2
+     
+     obi import GZ24053782-2F6-2F6_combined_R1.fastq.gz JC26/r1
+     obi import GZ24053782-2F6-2F6_combined_R2.fastq.gz JC26/r2
+     
+     obi import GZ24053783-2F7-2F7_combined_R1.fastq.gz JC27/r1
+     obi import GZ24053783-2F7-2F7_combined_R2.fastq.gz JC27/r2
+     
+     
+
+     #2023年8月
+     obi import GZ24052026-3F1-3F1_combined_R1.fastq.gz JC31/r1
+     obi import GZ24052026-3F1-3F1_combined_R2.fastq.gz JC31/r2
+     
+     obi import GZ24052027-3F2-3F2_combined_R1.fastq.gz JC32/r1
+     obi import GZ24052027-3F2-3F2_combined_R2.fastq.gz JC32/r2
+     
+     obi import GZ24052028-3F3-3F3_combined_R1.fastq.gz JC33/r1
+     obi import GZ24052028-3F3-3F3_combined_R2.fastq.gz JC33/r2
+     
+     obi import GZ24052029-3F4-3F4_combined_R1.fastq.gz JC34/r1
+     obi import GZ24052029-3F4-3F4_combined_R2.fastq.gz JC34/r2
+     
+     obi import GZ24062540-3F5-3F5_combined_R1.fastq.gz JC35/r1
+     obi import GZ24062540-3F5-3F5_combined_R2.fastq.gz JC35/r2
+          
+          
+
+          #2023年11月
+     obi import GZ24047760-4F1-4F1_combined_R1.fastq.gz JC41/r1
+     obi import GZ24047760-4F1-4F1_combined_R2.fastq.gz JC41/r2
+     
+     obi import GZ24047761-4F2-4F2_combined_R1.fastq.gz JC42/r1
+     obi import GZ24047761-4F2-4F2_combined_R2.fastq.gz JC42/r2
+     
+     obi import GZ24052112-4F3-4F3_combined_R1.fastq.gz JC43/r1
+     obi import GZ24052112-4F3-4F3_combined_R2.fastq.gz JC43/r2
+     
+     obi import GZ24052113-4F4-4F4_combined_R1.fastq.gz JC44/r1
+     obi import GZ24052113-4F4-4F4_combined_R2.fastq.gz JC44/r2
+     
+     obi import GZ24047764-4F5-4F5_combined_R1.fastq.gz JC45/r1
+     obi import GZ24047764-4F5-4F5_combined_R2.fastq.gz JC45/r2
+
+          #2024年08月
+     obi import GZ24051996-5F1-5F1_combined_R1.fastq.gz JC51/r1
+     obi import GZ24051996-5F1-5F1_combined_R2.fastq.gz JC51/r2
+     
+     obi import GZ24051997-5F2-5F2_combined_R1.fastq.gz JC52/r1
+     obi import GZ24051997-5F2-5F2_combined_R2.fastq.gz JC52/r2
+     
+     obi import GZ24051998-5F3-5F3_combined_R1.fastq.gz JC53/r1
+     obi import GZ24051998-5F3-5F3_combined_R2.fastq.gz JC53/r2
+     
+     obi import GZ24051999-5F4-5F4_combined_R1.fastq.gz JC54/r1
+     obi import GZ24051999-5F4-5F4_combined_R2.fastq.gz JC54/r2
+     
+     obi import GZ24052000-5F5-5F5_combined_R1.fastq.gz JC55/r1
+     obi import GZ24052000-5F5-5F5_combined_R2.fastq.gz JC55/r2
+     
+     
+     
+     #2024年11月
+     obi import GZ24062523-6F1-6F1_combined_R1.fastq.gz JC61/r1
+     obi import GZ24062523-6F1-6F1_combined_R2.fastq.gz JC61/r2
+     
+     obi import GZ24062524-6F2-6F2_combined_R1.fastq.gz JC62/r1
+     obi import GZ24062524-6F2-6F2_combined_R2.fastq.gz JC62/r2
+     
+     obi import GZ24062525-6F3-6F3_combined_R1.fastq.gz JC63/r1
+     obi import GZ24062525-6F3-6F3_combined_R2.fastq.gz JC63/r2
+     
+     obi import GZ24062526-6F4-6F4_combined_R1.fastq.gz JC64/r1
+     obi import GZ24062526-6F4-6F4_combined_R2.fastq.gz JC64/r2
+     
+     obi import GZ24062527-6F5-6F5_combined_R1.fastq.gz JC65/r1
+     obi import GZ24062527-6F5-6F5_combined_R2.fastq.gz JC65/r2
+     
+     
+     #导入map文件
+     obi import --ngsfilter CV1.txt JC1/ngsfile
+     obi import --ngsfilter CV2.txt JC2/ngsfile
+     obi import --ngsfilter CV3.txt JC3/ngsfile
+     obi import --ngsfilter CV4.txt JC4/ngsfile
+     obi import --ngsfilter 1F5.txt JC5/ngsfile
+     obi import --ngsfilter 1F6.txt JC6/ngsfile
+     obi import --ngsfilter 1F7.txt JC7/ngsfile
+     obi import --ngsfilter 1F8.txt JC8/ngsfile
+     obi import --ngsfilter 1F9.txt JC9/ngsfile
+
+     obi import --ngsfilter 2F1.txt JC21/ngsfile
+     obi import --ngsfilter 2F2.txt JC22/ngsfile
+     obi import --ngsfilter 2F3.txt JC23/ngsfile
+     obi import --ngsfilter 2F4.txt JC24/ngsfile
+     obi import --ngsfilter 2F5.txt JC25/ngsfile
+     obi import --ngsfilter 2F6.txt JC26/ngsfile
+     obi import --ngsfilter 2F7.txt JC27/ngsfile
+     
+     obi import --ngsfilter 3F1.txt JC31/ngsfile
+     obi import --ngsfilter 3F2.txt JC32/ngsfile
+     obi import --ngsfilter 3F3.txt JC33/ngsfile
+     obi import --ngsfilter 3F4.txt JC34/ngsfile
+     obi import --ngsfilter 3F5.txt JC35/ngsfile
+     
+     obi import --ngsfilter 4F1.txt JC41/ngsfile
+     obi import --ngsfilter 4F2.txt JC42/ngsfile
+     obi import --ngsfilter 4F3.txt JC43/ngsfile
+     obi import --ngsfilter 4F4.txt JC44/ngsfile
+     obi import --ngsfilter 4F5.txt JC45/ngsfile
+     
+     obi import --ngsfilter 5F1.txt JC51/ngsfile
+     obi import --ngsfilter 5F2.txt JC52/ngsfile
+     obi import --ngsfilter 5F3.txt JC53/ngsfile
+     obi import --ngsfilter 5F4.txt JC54/ngsfile
+     obi import --ngsfilter 5F5.txt JC55/ngsfile
+     
+     obi import --ngsfilter 6F1.txt JC61/ngsfile
+     obi import --ngsfilter 6F2.txt JC62/ngsfile
+     obi import --ngsfilter 6F3.txt JC63/ngsfile
+     obi import --ngsfilter 6F4.txt JC64/ngsfile
+     obi import --ngsfilter 6F5.txt JC65/ngsfile
+     
+
+     #双向合并(SLOW)
+     obi alignpairedend -R JC1/r1 JC1/r2 JC1/aligned
+     obi alignpairedend -R JC2/r1 JC2/r2 JC2/aligned
+     obi alignpairedend -R JC3/r1 JC3/r2 JC3/aligned
+     obi alignpairedend -R JC4/r1 JC4/r2 JC4/aligned
+     obi alignpairedend -R JC5/r1 JC5/r2 JC5/aligned
+     obi alignpairedend -R JC6/r1 JC6/r2 JC6/aligned
+     obi alignpairedend -R JC7/r1 JC7/r2 JC7/aligned
+     obi alignpairedend -R JC8/r1 JC8/r2 JC8/aligned
+     obi alignpairedend -R JC9/r1 JC9/r2 JC9/aligned
+     
+     obi alignpairedend -R JC21/r1 JC21/r2 JC21/aligned
+     obi alignpairedend -R JC22/r1 JC22/r2 JC22/aligned
+     obi alignpairedend -R JC23/r1 JC23/r2 JC23/aligned
+     obi alignpairedend -R JC24/r1 JC24/r2 JC24/aligned
+     obi alignpairedend -R JC25/r1 JC25/r2 JC25/aligned
+     obi alignpairedend -R JC26/r1 JC26/r2 JC26/aligned
+     obi alignpairedend -R JC27/r1 JC27/r2 JC27/aligned
+     
+     obi alignpairedend -R JC31/r1 JC31/r2 JC31/aligned
+     obi alignpairedend -R JC32/r1 JC32/r2 JC32/aligned
+     obi alignpairedend -R JC33/r1 JC33/r2 JC33/aligned
+     obi alignpairedend -R JC34/r1 JC34/r2 JC34/aligned
+     obi alignpairedend -R JC35/r1 JC35/r2 JC35/aligned
+     
+     obi alignpairedend -R JC41/r1 JC41/r2 JC41/aligned
+     obi alignpairedend -R JC42/r1 JC42/r2 JC42/aligned
+     obi alignpairedend -R JC43/r1 JC43/r2 JC43/aligned
+     obi alignpairedend -R JC44/r1 JC44/r2 JC44/aligned
+     obi alignpairedend -R JC45/r1 JC45/r2 JC45/aligned
+     
+     obi alignpairedend -R JC51/r1 JC51/r2 JC51/aligned
+     obi alignpairedend -R JC52/r1 JC52/r2 JC52/aligned
+     obi alignpairedend -R JC53/r1 JC53/r2 JC53/aligned
+     obi alignpairedend -R JC54/r1 JC54/r2 JC54/aligned
+     obi alignpairedend -R JC55/r1 JC55/r2 JC55/aligned
+     
+     obi alignpairedend -R JC61/r1 JC61/r2 JC61/aligned
+     obi alignpairedend -R JC62/r1 JC62/r2 JC62/aligned
+     obi alignpairedend -R JC63/r1 JC63/r2 JC63/aligned
+     obi alignpairedend -R JC64/r1 JC64/r2 JC64/aligned
+     obi alignpairedend -R JC65/r1 JC65/r2 JC65/aligned
+     
+
+     #统计合并情况（跑完之后看合并分数：需要在0.98以上和数据量）
+     obi stats -a score_norm JC1/aligned
+     obi stats -a score_norm JC2/aligned
+     obi stats -a score_norm JC3/aligned
+     obi stats -a score_norm JC4/aligned
+     obi stats -a score_norm JC5/aligned
+     obi stats -a score_norm JC6/aligned
+     obi stats -a score_norm JC7/aligned
+     obi stats -a score_norm JC8/aligned
+     obi stats -a score_norm JC9/aligned
+     
+     obi stats -a score_norm JC21/aligned
+     obi stats -a score_norm JC22/aligned
+     obi stats -a score_norm JC23/aligned
+     obi stats -a score_norm JC24/aligned
+     obi stats -a score_norm JC25/aligned
+     obi stats -a score_norm JC26/aligned
+     obi stats -a score_norm JC27/aligned
+     
+     obi stats -a score_norm JC31/aligned
+     obi stats -a score_norm JC32/aligned
+     obi stats -a score_norm JC33/aligned
+     obi stats -a score_norm JC34/aligned
+     obi stats -a score_norm JC35/aligned
+     
+     obi stats -a score_norm JC41/aligned
+     obi stats -a score_norm JC42/aligned
+     obi stats -a score_norm JC43/aligned
+     obi stats -a score_norm JC44/aligned
+     obi stats -a score_norm JC45/aligned
+     
+     obi stats -a score_norm JC51/aligned
+     obi stats -a score_norm JC52/aligned
+     obi stats -a score_norm JC53/aligned
+     obi stats -a score_norm JC54/aligned
+     obi stats -a score_norm JC55/aligned
+     
+     obi stats -a score_norm JC61/aligned
+     obi stats -a score_norm JC62/aligned
+     obi stats -a score_norm JC63/aligned
+     obi stats -a score_norm JC64/aligned
+     obi stats -a score_norm JC65/aligned
+
+#保留合并分数高的数据，正常在（0.9-0.97）（看保留数据量（序列数）是多少，和上面的数据量需不差多少）
+     #时间在40s左右，时间太短不正常（如4s）
+     obi grep -p "sequence['score_norm'] > 0.7" JC1/aligned JC1/good_aligned
+     obi grep -p "sequence['score_norm'] > 0.7" JC2/aligned JC2/good_aligned
+     obi grep -p "sequence['score_norm'] > 0.7" JC3/aligned JC3/good_aligned
+     obi grep -p "sequence['score_norm'] > 0.7" JC4/aligned JC4/good_aligned
+     obi grep -p "sequence['score_norm'] > 0.7" JC5/aligned JC5/good_aligned
+     obi grep -p "sequence['score_norm'] > 0.7" JC6/aligned JC6/good_aligned
+     obi grep -p "sequence['score_norm'] > 0.7" JC7/aligned JC7/good_aligned
+     obi grep -p "sequence['score_norm'] > 0.7" JC8/aligned JC8/good_aligned
+     obi grep -p "sequence['score_norm'] > 0.7" JC9/aligned JC9/good_aligned
+     
+     obi grep -p "sequence['score_norm'] > 0.7" JC21/aligned JC21/good_aligned
+     obi grep -p "sequence['score_norm'] > 0.7" JC22/aligned JC22/good_aligned
+     obi grep -p "sequence['score_norm'] > 0.7" JC23/aligned JC23/good_aligned
+     obi grep -p "sequence['score_norm'] > 0.7" JC24/aligned JC24/good_aligned
+     obi grep -p "sequence['score_norm'] > 0.7" JC25/aligned JC25/good_aligned
+     obi grep -p "sequence['score_norm'] > 0.7" JC26/aligned JC26/good_aligned
+     obi grep -p "sequence['score_norm'] > 0.7" JC27/aligned JC27/good_aligned
+     
+     obi grep -p "sequence['score_norm'] > 0.7" JC31/aligned JC31/good_aligned
+     obi grep -p "sequence['score_norm'] > 0.7" JC32/aligned JC32/good_aligned
+     obi grep -p "sequence['score_norm'] > 0.7" JC33/aligned JC33/good_aligned
+     obi grep -p "sequence['score_norm'] > 0.7" JC34/aligned JC34/good_aligned
+     obi grep -p "sequence['score_norm'] > 0.7" JC35/aligned JC35/good_aligned
+     
+     obi grep -p "sequence['score_norm'] > 0.7" JC41/aligned JC41/good_aligned
+     obi grep -p "sequence['score_norm'] > 0.7" JC42/aligned JC42/good_aligned
+     obi grep -p "sequence['score_norm'] > 0.7" JC43/aligned JC43/good_aligned
+     obi grep -p "sequence['score_norm'] > 0.7" JC44/aligned JC44/good_aligned
+     obi grep -p "sequence['score_norm'] > 0.7" JC45/aligned JC45/good_aligned
+
+     obi grep -p "sequence['score_norm'] > 0.7" JC51/aligned JC51/good_aligned
+     obi grep -p "sequence['score_norm'] > 0.7" JC52/aligned JC52/good_aligned
+     obi grep -p "sequence['score_norm'] > 0.7" JC53/aligned JC53/good_aligned
+     obi grep -p "sequence['score_norm'] > 0.7" JC54/aligned JC54/good_aligned
+     obi grep -p "sequence['score_norm'] > 0.7" JC55/aligned JC55/good_aligned
+
+     obi grep -p "sequence['score_norm'] > 0.7" JC61/aligned JC61/good_aligned
+     obi grep -p "sequence['score_norm'] > 0.7" JC62/aligned JC62/good_aligned
+     obi grep -p "sequence['score_norm'] > 0.7" JC63/aligned JC63/good_aligned
+     obi grep -p "sequence['score_norm'] > 0.7" JC64/aligned JC64/good_aligned
+     obi grep -p "sequence['score_norm'] > 0.7" JC65/aligned JC65/good_aligned
+
+     #将数据分拆到各个样品中(SLOW)
+     #时间：0.5h以上
+     obi ngsfilter -t JC1/ngsfile -u JC1/aligned_unidentified JC1/good_aligned JC1/demultiplex
+     obi ngsfilter -t JC2/ngsfile -u JC2/aligned_unidentified JC2/good_aligned JC2/demultiplex
+     obi ngsfilter -t JC3/ngsfile -u JC3/aligned_unidentified JC3/good_aligned JC3/demultiplex
+     obi ngsfilter -t JC4/ngsfile -u JC4/aligned_unidentified JC4/good_aligned JC4/demultiplex
+     obi ngsfilter -t JC5/ngsfile -u JC5/aligned_unidentified JC5/good_aligned JC5/demultiplex
+     obi ngsfilter -t JC6/ngsfile -u JC6/aligned_unidentified JC6/good_aligned JC6/demultiplex
+     obi ngsfilter -t JC7/ngsfile -u JC7/aligned_unidentified JC7/good_aligned JC7/demultiplex
+     obi ngsfilter -t JC8/ngsfile -u JC8/aligned_unidentified JC8/good_aligned JC8/demultiplex
+     obi ngsfilter -t JC9/ngsfile -u JC9/aligned_unidentified JC9/good_aligned JC9/demultiplex
+     
+     obi ngsfilter -t JC21/ngsfile -u JC21/aligned_unidentified JC21/good_aligned JC21/demultiplex
+     obi ngsfilter -t JC22/ngsfile -u JC22/aligned_unidentified JC22/good_aligned JC22/demultiplex
+     obi ngsfilter -t JC23/ngsfile -u JC23/aligned_unidentified JC23/good_aligned JC23/demultiplex
+     obi ngsfilter -t JC24/ngsfile -u JC24/aligned_unidentified JC24/good_aligned JC24/demultiplex
+     obi ngsfilter -t JC25/ngsfile -u JC25/aligned_unidentified JC25/good_aligned JC25/demultiplex
+     obi ngsfilter -t JC26/ngsfile -u JC26/aligned_unidentified JC26/good_aligned JC26/demultiplex
+     obi ngsfilter -t JC27/ngsfile -u JC27/aligned_unidentified JC27/good_aligned JC27/demultiplex
+     
+     obi ngsfilter -t JC31/ngsfile -u JC31/aligned_unidentified JC31/good_aligned JC31/demultiplex
+     obi ngsfilter -t JC32/ngsfile -u JC32/aligned_unidentified JC32/good_aligned JC32/demultiplex
+     obi ngsfilter -t JC33/ngsfile -u JC33/aligned_unidentified JC33/good_aligned JC33/demultiplex
+     obi ngsfilter -t JC34/ngsfile -u JC34/aligned_unidentified JC34/good_aligned JC34/demultiplex
+     obi ngsfilter -t JC35/ngsfile -u JC35/aligned_unidentified JC35/good_aligned JC35/demultiplex
+     
+     obi ngsfilter -t JC41/ngsfile -u JC41/aligned_unidentified JC41/good_aligned JC41/demultiplex
+     obi ngsfilter -t JC42/ngsfile -u JC42/aligned_unidentified JC42/good_aligned JC42/demultiplex
+     obi ngsfilter -t JC43/ngsfile -u JC43/aligned_unidentified JC43/good_aligned JC43/demultiplex
+     obi ngsfilter -t JC44/ngsfile -u JC44/aligned_unidentified JC44/good_aligned JC44/demultiplex
+     obi ngsfilter -t JC45/ngsfile -u JC45/aligned_unidentified JC45/good_aligned JC45/demultiplex
+     
+     obi ngsfilter -t JC51/ngsfile -u JC51/aligned_unidentified JC51/good_aligned JC51/demultiplex
+     obi ngsfilter -t JC52/ngsfile -u JC52/aligned_unidentified JC52/good_aligned JC52/demultiplex
+     obi ngsfilter -t JC53/ngsfile -u JC53/aligned_unidentified JC53/good_aligned JC53/demultiplex
+     obi ngsfilter -t JC54/ngsfile -u JC54/aligned_unidentified JC54/good_aligned JC54/demultiplex
+     obi ngsfilter -t JC55/ngsfile -u JC55/aligned_unidentified JC55/good_aligned JC55/demultiplex
+     
+     obi ngsfilter -t JC61/ngsfile -u JC61/aligned_unidentified JC61/good_aligned JC61/demultiplex
+     obi ngsfilter -t JC62/ngsfile -u JC62/aligned_unidentified JC62/good_aligned JC62/demultiplex
+     obi ngsfilter -t JC63/ngsfile -u JC63/aligned_unidentified JC63/good_aligned JC63/demultiplex
+     obi ngsfilter -t JC64/ngsfile -u JC64/aligned_unidentified JC64/good_aligned JC64/demultiplex
+     obi ngsfilter -t JC65/ngsfile -u JC65/aligned_unidentified JC65/good_aligned JC65/demultiplex
+     
+     
+     #如果map文件出错先清理内存残留(可不跑)
+     #上一步出错的可以运行这个代码清除
+     #obi clean_dms JC34.obidms
+     #obi clean_dms JC35.obidms
+     
+     
+
+     #在此步合库（多库才要跑）
+     #导出并合并拆分好的数据
+     obi export --fasta-output JC1/demultiplex > JC1demultiplex.fasta
+     obi export --fasta-output JC2/demultiplex > JC2demultiplex.fasta
+     obi export --fasta-output JC3/demultiplex > JC3demultiplex.fasta
+     obi export --fasta-output JC4/demultiplex > JC4demultiplex.fasta
+     obi export --fasta-output JC5/demultiplex > JC5demultiplex.fasta
+     obi export --fasta-output JC6/demultiplex > JC6demultiplex.fasta
+     obi export --fasta-output JC7/demultiplex > JC7demultiplex.fasta
+     obi export --fasta-output JC8/demultiplex > JC8demultiplex.fasta
+     obi export --fasta-output JC9/demultiplex > JC9demultiplex.fasta
+     
+     obi export --fasta-output JC21/demultiplex > JC21demultiplex.fasta
+     obi export --fasta-output JC22/demultiplex > JC22demultiplex.fasta
+     obi export --fasta-output JC23/demultiplex > JC23demultiplex.fasta
+     obi export --fasta-output JC24/demultiplex > JC24demultiplex.fasta
+     obi export --fasta-output JC25/demultiplex > JC25demultiplex.fasta
+     obi export --fasta-output JC26/demultiplex > JC26demultiplex.fasta
+     obi export --fasta-output JC27/demultiplex > JC27demultiplex.fasta
+     
+     obi export --fasta-output JC31/demultiplex > JC31demultiplex.fasta
+     obi export --fasta-output JC32/demultiplex > JC32demultiplex.fasta
+     obi export --fasta-output JC33/demultiplex > JC33demultiplex.fasta
+     obi export --fasta-output JC34/demultiplex > JC34demultiplex.fasta
+     obi export --fasta-output JC35/demultiplex > JC35demultiplex.fasta
+     
+     obi export --fasta-output JC41/demultiplex > JC41demultiplex.fasta
+     obi export --fasta-output JC42/demultiplex > JC42demultiplex.fasta
+     obi export --fasta-output JC43/demultiplex > JC43demultiplex.fasta
+     obi export --fasta-output JC44/demultiplex > JC44demultiplex.fasta
+     obi export --fasta-output JC45/demultiplex > JC45demultiplex.fasta
+     
+     obi export --fasta-output JC51/demultiplex > JC51demultiplex.fasta
+     obi export --fasta-output JC52/demultiplex > JC52demultiplex.fasta
+     obi export --fasta-output JC53/demultiplex > JC53demultiplex.fasta
+     obi export --fasta-output JC54/demultiplex > JC54demultiplex.fasta
+     obi export --fasta-output JC55/demultiplex > JC55demultiplex.fasta
+     
+     obi export --fasta-output JC61/demultiplex > JC61demultiplex.fasta
+     obi export --fasta-output JC62/demultiplex > JC62demultiplex.fasta
+     obi export --fasta-output JC63/demultiplex > JC63demultiplex.fasta
+     obi export --fasta-output JC64/demultiplex > JC64demultiplex.fasta
+     obi export --fasta-output JC65/demultiplex > JC65demultiplex.fasta
+     
+     
+     cat JC1demultiplex.fasta JC2demultiplex.fasta JC3demultiplex.fasta JC4demultiplex.fasta JC5demultiplex.fasta JC6demultiplex.fasta JC7demultiplex.fasta JC8demultiplex.fasta JC9demultiplex.fasta JC21demultiplex.fasta JC22demultiplex.fasta JC23demultiplex.fasta JC24demultiplex.fasta JC25demultiplex.fasta JC26demultiplex.fasta JC27demultiplex.fasta JC31demultiplex.fasta JC32demultiplex.fasta JC33demultiplex.fasta JC34demultiplex.fasta JC35demultiplex.fasta JC41demultiplex.fasta JC42demultiplex.fasta JC43demultiplex.fasta JC44demultiplex.fasta JC45demultiplex.fasta JC51demultiplex.fasta JC52demultiplex.fasta JC53demultiplex.fasta JC54demultiplex.fasta JC55demultiplex.fasta JC61demultiplex.fasta JC62demultiplex.fasta JC63demultiplex.fasta JC64demultiplex.fasta JC65demultiplex.fasta  >JC_demultiplex.fasta
+     cat JC1demultiplex.fasta JC2demultiplex.fasta JC3demultiplex.fasta JC4demultiplex.fasta   >JC_demultiplex.fasta
+     #导入合并数据（多库才要跑）
+     obi import JC_demultiplex.fasta JC/demultiplex
+     
+     #去重复
+     obi uniq -m sample JC/demultiplex JC/dereplicated
+     
+     #去掉序列抬头多余的信息(该步骤不去掉任何信息，直接复制即可)
+     obi annotate -k COUNT -k MERGED_sample JC/dereplicated JC/dereplicated_lighter
+     
+     #去掉短的和读数少的的序列（序列大于50的去掉）
+     obi grep -p "len(sequence)>=50 and sequence['COUNT']>=10" JC/dereplicated_lighter JC/LONG
+     
+     #去噪
+     ##这里是clean（处理OTU大表文件）
+     
+     obi clean -r 0.05 -H JC/LONG JC/clean
+     
+     #去掉序列抬头多余的信息
+     #这里是clean_1（处理fasta文件）
+     
+     obi annotate -k ID JC/clean JC/clean_1
+     
+     #建立导出文件夹
+     mkdir JC_result
+
+     #导出
+     obi export --tab-output JC/clean > JC_result/JC_obi_results.tab
+     obi export --fasta-output JC/clean_1 > JC_result/JC_obi.fasta
+     
+     #sintax对比（路径，fasta文件）
+     
+     vsearch --threads 20 --sintax JC_result/JC_obi.fasta --db /media/dell/eDNA2/HQQ/obitzh/db2/coi_reference.fasta --sintax_cutoff 1 --tabbedout JC_result/JC_vsearch.tsv
+     
+     vsearch --threads 20 --sintax JC_result/JC_obi.fasta --db /media/dell/eDNA1/WJ./crabs/12s/12s.fasta --sintax_cutoff 0.97 --tabbedout JC_result/JC_vsearch.tsv
+     
+     vsearch --threads 20 --sintax JC_result/JC_obi.fasta --db /media/dell/eDNA1/LWJ/DJS/s2146g01026_GDDX-20241027-L-01-2024-11-021149/obi/db2/1.fasta --sintax_cutoff 1 --tabbedout JC_result/JC_vsearch.tsv
+     
+     
+#BLAST数据库(obi3)
+#换终端，在db开
+#注释前将JC_vsearch.tsv文件中的count =1删去，“＋”那一列要保留！
+     conda activate obi3
+makeblastdb -in 12s.fasta -parse_seqids -dbtype nucl
+
+# get better hits with smaller word size
+#换终端，在JC_result开
+#这一步跑的时候，在db新开终端跑crabs
+blastn -task blastn -num_threads 20 -evalue 1000 -word_size 7 -max_target_seqs 500 -db /media/dell/eDNA1/WJ./crabs/12s/12s.fasta -perc_identity 0.97 -outfmt "6 qseqid sseqid evalue length pident nident score bitscore" -out blast-JC.out -query JC_obi.fasta
+
+blastn -task blastn -num_threads 30 -evalue 1000 -word_size 7 -max_target_seqs 500 -db /media/dell/eDNA1/LWJ/DJS/s2146g01026_GDDX-20241027-L-01-2024-11-021149/obi/db2/1.fasta -outfmt "6 qseqid sseqid evalue length pident nident score bitscore" -out blast-JC.out -query JC_obi.fasta
+
+blastn -task blastn -num_threads 25 -evalue 1000 -word_size 7 -max_target_seqs 500 -db /media/dell/eDNA1/XKH/2408cssdsy/obi12s/db/12sair_reference.fasta -outfmt "6 qseqid sseqid evalue length pident nident score bitscore" -out blast-JC.out -query JC_obi.fasta
+12sair_reference.fasta
+
+#crabs跑的代码
+crabs assign_tax --input dq.fasta --output dq.tsv --acc2tax /media/dell/eDNA1/WJ./crabs/tax/nucl_gb.accession2taxid --taxid /media/dell/eDNA1/WJ./crabs/tax/nodes.dmp --name /media/dell/eDNA1/WJ./crabs/tax/names.dmp --missing missing_taxa.tsv
+
+#join the header
+#跑完crabs之后
+#建表头
+printf "qseqid\tsseqidLocal\tevalueLocal\tlengthLocal\tpidentLocal\tnidentLocal\tscoreLocal\tbitscoreLocal\n" > headers1
+cat headers1 blast-JC.out > blast-JC.tsv
+
+#建表头
+printf "Accession\tseqID\tsuperkingdom\tphylum\tclass\torder\tfamily\tgenus\tspecies\tsequences\n" > headers2
+cat  headers2 12s.tsv > dq-12s.tsv
+
+#将最后生成的tsv文件dq-fwh .tsv复制到JC_result
+#复制make-OTU.R，启动需要的R语言版本
+export PATH="/BioAnalyse/miniconda3/envs/be/bin:$PATH"
+
+Rscript make-OTU.R --sintax JC_vsearch.tsv --blast blast-JC.tsv --taxonomy dq-12s.tsv --otus JC_obi_results.tab --output CSSD2503_12S.csv
+
+Rscript make-OTU.R --sintax JC1_vsearch.tsv --blast blast-JC.tsv --taxonomy FISHh.tsv --otus JC_obi_results.tab --output zj_full_OTUs.csv
+
+sudo chmod -R CSSD2503_12S.csv

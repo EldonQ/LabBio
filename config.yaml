@@ -1,0 +1,42 @@
+# Local-IA Global Configuration
+# =============================
+# Single Source of Truth for the entire project.
+
+system:
+  mode: "dev" # dev (local windows executor) or prod (remote ubuntu)
+
+# LLM Configuration
+# API Keys and Model names are now loaded from .env file
+llm:
+  active_provider: "online" # Switch between 'local' and 'online'
+  
+  providers:
+    online:
+      # Configured via OPENAI_API_KEY, OPENAI_BASE_URL, OPENAI_MODEL in .env
+      source: "env"
+      
+    local:
+      api_base: "http://localhost:8080/v1"
+      model: "Qwen/Qwen2.5-Coder-32B-Instruct-GPTQ-Int4"
+      api_key: "EMPTY"
+
+# Executor Configuration (The Muscle)
+executor:
+  host: "10.24.22.176" # Ubuntu Muscle Node IP
+  port: 8000
+  
+  # Path Mappings
+  remote_root: "/media/dell/eDNA3/Lab" # Path on Ubuntu
+  windows_mount: "F:/LabData"          # Path on Windows (SMB Mount)
+
+  # Environment Definitions
+  envs:
+    obitools: "obi3"
+    qiime2: "qiime2-amplicon-2024.10"
+    deepcoi: "deepcoi_env"
+
+# RAG Configuration (The Memory)
+rag:
+  persist_directory: "./backend/rag/vector_db"
+  collection_name: "lab_protocols"
+  embedding_model: "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"

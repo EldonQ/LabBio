@@ -1,0 +1,132 @@
+Qiime2
+准备好metadata.txt（也就是之前用的Map可以自己准备），其中注意必要的文件命名，必要的四列：SampleID\ BarcodeSequence\ LinkerPrimerSequence\ ReversePrimerSequence，此外可自己进行一些样本数据细节的添加
+ 
+
+特征表构建
+1.	双端数据的导入/拆分样本
+a)	#已经有拆分好的样本数据，直接导入
+qiime tools import --type 'SampleData[PairedEndSequencesWithQuality]' --input-path manifest --output-path demux.qza --input-format PairedEndFastqManifestPhred33V2
+
+b)	#未拆分的样本按照barcode拆分，双端和单端barcode都可使用使用 
+#使用fastaq-multx去进行样本拆分，R1和R2分别颠倒拆分一次，eg:barcode.txt为Euka.map1.txt,将双端序列文件放在同一文件夹下。
+#如果是多个库的话，建议将这一步到合并之前每一个库都单独拆分，同时可以将-B Euka1.map.txt 改为 -B➕map文件名，*.R1.fastq *.R2.fastq分别改为对应的正向和反向序列的fastq文件名就好
+mkdir fq1
+mkdir fq2
+/fastq-multx/fastq-multx -B 4T2map.txt -m 1 -b 4T2_R1.fastq 4T2_R2.fastq -o fq1/%.R1.fastq -o fq1/%.R2.fastq
+/fastq-multx/fastq-multx -B 4T2map.txt -m 1 -b 4T2_R2.fastq 4T2_R1.fastq -o fq2/%.R1.fastq -o fq2/%.R2.fastq
+
+/fastq-multx/fastq-multx -B 4T3map.txt -m 1 -b 4T3_R1.fastq 4T3_R2.fastq -o fq1/%.R1.fastq -o fq1/%.R2.fastq
+/fastq-multx/fastq-multx -B 4T3map.txt -m 1 -b 4T3_R2.fastq 4T3_R1.fastq -o fq2/%.R1.fastq -o fq2/%.R2.fastq
+
+/fastq-multx/fastq-multx -B 4T4map.txt -m 1 -b 4T4_R1.fastq 4T4_R2.fastq -o fq1/%.R1.fastq -o fq1/%.R2.fastq
+/fastq-multx/fastq-multx -B 4T4map.txt -m 1 -b 4T4_R2.fastq 4T4_R1.fastq -o fq2/%.R1.fastq -o fq2/%.R2.fastq
+
+/fastq-multx/fastq-multx -B DJVERT-4V4map.txt -m 1 -b 4V4_R1.fastq 4V4_R2.fastq -o fq1/%.R1.fastq -o fq1/%.R2.fastq
+/fastq-multx/fastq-multx -B DJVERT-4V4map.txt -m 1 -b 4V4_R2.fastq 4V4_R1.fastq -o fq2/%.R1.fastq -o fq2/%.R2.fastq
+
+/fastq-multx/fastq-multx -B DJVERT-4V5map.txt -m 1 -b 4V5_R1.fastq 4V5_R2.fastq -o fq1/%.R1.fastq -o fq1/%.R2.fastq
+/fastq-multx/fastq-multx -B DJVERT-4V5map.txt -m 1 -b 4V5_R2.fastq 4V5_R1.fastq -o fq2/%.R1.fastq -o fq2/%.R2.fastq
+
+
+#合并拆分结果
+mkdir fq
+# 可以不执行这一步把Euka的map的列名也就是第一行删掉，并保存为sample.list即可
+for i in `ls fq1/*R1.fastq`;do a=${i/.R1.fastq/};a=${a/fq1\//};echo "$a";done > sample.list
+for i in `cat sample.list`;do echo "cat fq1/$i.R1.fastq fq2/$i.R2.fastq > ./fq/$i.R1.fastq";done > command.combine.R1.list
+for i in `cat sample.list`;do echo "cat fq1/$i.R2.fastq fq2/$i.R1.fastq > ./fq/$i.R2.fastq";done > command.combine.R2.list
+sh command.combine.R1.list
+sh command.combine.R2.list
+
+#可以将每一个库拆分并合并之后在进行统一的数据导入，这时候再统一进行manifest文件的生成，里面包含的是这一对引物种所有库中所有样本的正反向序列的绝对路径。但本流程采用的是一个库的样本信息。
+#生成manifest文件然后导入已经拆分样本的数据，红色标红的map需要替换成自己之前准备好的名字，这里使用的是Euka.map1.txt。
+for i in `ls fq/*R1.fastq`;do a=${i/.R1.fastq/};a=${a/fq\//};echo "$a";done > filepath.list
+awk 'NR==1{print "sample-id\tforward-absolute-filepath\treverse-absolute-filepath"} NR>1{print$1"\t$PWD/"$1".R1.fastq\t$PWD/"$1".R2.fastq";}' filepath.list  > manifest
+
+conda activate qiime2-2020.11
+
+qiime tools import --type 'SampleData[PairedEndSequencesWithQuality]' --input-path manifest --output-path demux.qza --input-format PairedEndFastqManifestPhred33V2
+
+2.	DADA2去噪
+time qiime dada2 denoise-paired --i-demultiplexed-seqs demux.qza --p-n-threads 8 --p-trim-left-f 0 --p-trim-left-r 12 --p-trunc-len-f 0 --p-trunc-len-r 0 --o-table dada2-table.qza --o-representative-sequences dada2-rep-seqs.qza --o-denoising-stats denoising-stats.qza
+
+#最终生成一共有三个文件，一个是table.qza，一个是rep-seqs.qza, 一个是denoising-stats.qza；--p-nthreads 0非必要不用修改，0为默认使用cpu的所有内核；--p-trim-left-r后面的参数需要按照自己的barcode碱基个数进行修改
+4. 统计特征表和代表序列
+cp dada2-table.qza table.qza
+cp dada2-rep-seqs.qza rep-seqs.qza
+qiime feature-table summarize --i-table table.qza --o-visualization table.qzv --m-sample-metadata-file 4Tmap.txt（其实就是map）
+结果在https://view.qiime2.org/中查看，其中.qza为数据文件；.qzv为图表文件，将.qzv文件拖入网站中即可查看。
+#显示序列长度统计，还有每个特征序列的ID、长度和序列
+qiime feature-table tabulate-seqs --i-data rep-seqs.qza --o-visualization rep-seqs.qzv
+5.	特征表聚类
+#特征表的无参聚类
+qiime vsearch cluster-features-de-novo --i-table table.qza --i-sequences rep-seqs.qza --p-perc-identity 0.99 --o-clustered-table table-dn-97.qza --o-clustered-sequences rep-seqs-dn-97.qza
+# 自用
+qiime vsearch cluster-features-de-novo --i-table table.qza --i-sequences rep-seqs.qza --p-perc-identity 0.97 --o-clustered-table table-0.97.qza --o-clustered-sequences rep-seqs-0.97.qza
+
+#显示序列长度统计，还有每个特征序列的ID、长度和序列
+qiime feature-table tabulate-seqs --i-data rep-seqs-dn-97.qza --o-visualization rep-seqs-dn-97.qzv
+
+6.	物种注释
+qiime feature-classifier classify-sklearn --i-classifier /feature-classifier/pr2-classifier.qza --i-reads rep-seqs-dn-97.qza --o-classification taxonomy.qza
+qiime feature-classifier classify-sklearn --i-classifier /media/dell/eDNA1/SEVEN/tzh/太子河数据一期*/TZHCOI*/qiif/tzh_coi_reference.qza --i-reads rep-seqs-dn-9.qza --o-classification taxonomy_test_9.qza
+
+#LWJ2024DJ
+qiime feature-classifier classify-sklearn --i-classifier /feature-classifier/mitofish-classifier.qza --i-reads rep-seqs-dn-97.qza --o-classification taxonomy.qza
+
+
+qiime feature-classifier classify-sklearn --i-classifier /media/dell/eDNA1/WFF/预实验数据/240402bysy/鱼12s/12S/DCclassifier.qza --i-reads rep-seqs-dn-97.qza --o-classification taxonomy.qza
+qiime feature-classifier classify-sklearn --i-classifier /feature-classifier/mitofish-classifier.qza --i-reads rep-seqs-dn-97.qza --o-classification taxonomy.qza
+qiime feature-classifier classify-sklearn --i-classifier /media/dell/eDNA1/WFF/202401环科院/鱼/广州站数据库/fishclassifier.qza --i-reads rep-seqs-dn-97.qza --o-classification taxonomy.qza
+
+
+#--i-classifier 输入为已经训练好的数据库分类分类器，例如silva138数据库所训练的分类器的绝对路径：/feature-classifier/mitofish-classifier.qza，输出文件为.qza,一些数据库分类器路径可见补充部分(在computer里面找）
+#带有物种注释和特征ID的压缩文件
+#可视化物种注释
+qiime metadata tabulate --m-input-file taxonomy.qza --o-visualization taxonomy.qzv
+7.	Feature-Table导出（原OTUs-Table）：
+#feature-table.qza和taxonmony.qza文件导出
+qiime tools extract --input-path table-dn-97.qza  --output-path feature-table
+qiime tools export --input-path taxonomy.qza --output-path taxonomy
+#处理表头
+sed -i -e '1 s/Feature/#Feature/' -e '1 s/Taxon/taxonomy/' taxonomy/taxonomy.tsv
+
+
+#添加物种注释信息，注意蓝色的部分需要自己进行查看，因为每次分析流程的这串字符串都不一样
+biom add-metadata -i feature-table/990a2342-11a9-4017-9b34-5ce47c47e11d/data/feature-table.biom -o feature-table/990a2342-11a9-4017-9b34-5ce47c47e11d/data/feature-table_w_tax.biom --observation-metadata-fp taxonomy/taxonomy.tsv --sc-separated taxonomy
+
+#格式转换为.txt
+biom convert -i feature-table/990a2342-11a9-4017-9b34-5ce47c47e11d/data/feature-table_w_tax.biom	-o TELE02202408.txt --to-tsv --header-key taxonomy
+
+数据分析
+1.	Alpha和Beta多样性分析
+#构建进化树用于多样性分析
+qiime phylogeny align-to-tree-mafft-fasttree --i-sequences rep-seqs.qza --o-alignment aligned-rep-seqs.qza --o-masked-alignment masked-aligned-rep-seqs.qza --o-tree unrooted-tree.qza --o-rooted-tree rooted-tree.qza
+#多样性分析，低于重采样深度的样本将会丢弃，通常重采样深度会选择样本测序量最小值以保留较多样本，可以从table.qzv中查看最小值多少
+qiime diversity core-metrics-phylogenetic --i-phylogeny rooted-tree.qza --i-table table.qza --p-sampling-depth 1000 --m-metadata-file metadata.txt --output-dir core-metrics-results
+2.	Alpha多样性组间显著性分析和可视化
+#可选的alpha多样性指数有faith_pd、shannon、observed_features和evenness。faith_pd是综合物种间进化树信息的多样性指数，shannon是综合丰度均和均匀度的指数，observed_features是丰富度，evenness是均匀度。Index更换为选择的多样性指数即可。
+qiime diversity alpha-group-significance --i-alpha-diversity core-metrics-results/${index}_vector.qza --m-metadata-file metadata.txt --o-visualization core-metrics-results/${index}-group-significance.qzv
+3.	Aplha多样性稀释曲线
+#max-depth参数通常调置为样本测序量最大值，同样可以从table.qzv中查看或者试运行一个特别大的值，然后根据报错会反馈最大值是多少再根据报错结果修改最大值。
+qiime diversity alpha-rarefaction --i-table table.qza --i-phylogeny rooted-tree.qza --p-max-depth 130000 --m-metadata-file metadata.txt --o-visualization alpha-rarefaction.qzv
+4.	Beta多样性组间显著性分析和可视化
+#可选的beta指数有unweighted_unifrac、bray_curtis、weighted_unifrac和jaccard。同样组间距离更换为选择的指数即可
+qiime diversity beta-group-significance --i-distance-matrix core-metrics-results/${distance}_distance_matrix.qza --m-metadata-file metadata.txt --m-metadata-column ${column} --o-visualization core-metrics-results/${distance}-${column}-significance.qzv --p-pairwise
+#查看core-metrics-results目录中的weighted_unifrac_emperor.qzv，按column选择颜色分组，展示基于指数距离的主坐标分析图
+5.	注释物种可视化
+#堆叠柱状图展示
+qiime taxa barplot --i-table table.qza --i-taxonomy taxonomy.qza --m-metadata-file metadata.txt --o-visualization taxa-bar-plots.qzv
+ 
+补充部分
+1)	训练分类器
+time qiime feature-classifier fit-classifier-naive-bayes --i-reference-reads 99_otus.qza --i-reference-taxonomy ref-taxonomy.qza --o-classifier classifier_gg_13_8_99.qza
+2)	数据库路径
+silva : /feature-classifier/silva-138-99-classifier.qza
+mitofish : /feature-classifier/mitofish-classifier.qza
+qiime tools import --type 'SampleData[PairedEndSequencesWithQuality]' --input-path manifest --output-path demux.qza --input-format PairedEndFastqManifestPhred33V2
+
+conda activate qiime2-2020.11
+qiime tools import --type 'FeatureData[Sequence]' --input-path WFF320终极库.fasta --output-path seq.qza
+conda activate qiime2-2020.11
+qiime tools import --type 'FeatureData[Taxonomy]' --input-format HeaderlessTSVTaxonomyFormat --input-path WFF12sNEW.txt --output-path tax.qza
+time qiime feature-classifier fit-classifier-naive-bayes --i-reference-reads seq.qza --i-reference-taxonomy tax.qza --o-classifier classifier.qza

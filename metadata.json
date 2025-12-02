@@ -1,5 +1,0 @@
-{
-  "name": "Local-IA BioStation",
-  "description": "A local bioinformatics intelligence platform orchestrating Windows and Ubuntu nodes for automated OBITools and QIIME2 workflows.",
-  "requestFramePermissions": []
-}

@@ -1,0 +1,12 @@
+langchain
+langchain-community
+langgraph
+chromadb
+streamlit
+pyyaml
+openai
+tiktoken
+watchdog
+nomic
+unstructured
+python-docx

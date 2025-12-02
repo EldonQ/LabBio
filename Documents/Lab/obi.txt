@@ -1,0 +1,131 @@
+fastqc BFR22_R1.fq.gz BFR22_R2.fq.gz -o /media/dell/eDNA1/ZYT/2024GZ/1/HZWL
+
+source ~/.bashrc
+cd /media/dell/eDNA1/LWJ/DJS/s2146g01026_GDDX-20241027-L-01-2024-11-021149/obi
+
+
+#导入测序数据
+obi import GZ24052110-CV3-CV3_combined_R1.fastq.gz JC3/r1
+obi import GZ24052110-CV3-CV3_combined_R2.fastq.gz JC3/r2
+
+obi import 4V2_R1.fastq JC2/r1
+obi import 4V5_R2.fastq JC5/r2
+
+
+#导入map文件
+obi import --ngsfilter DJVERT-4V1map.txt JC1/ngsfile
+obi import --ngsfilter DJVERT-4V2map.txt JC2/ngsfile
+obi import --ngsfilter DJVERT-4V3map.txt JC3/ngsfile
+obi import --ngsfilter DJVERT-4V4map.txt JC4/ngsfile
+obi import --ngsfilter DJVERT-4V5map.txt JC5/ngsfile
+
+
+#双向合并(SLOW)
+
+
+obi alignpairedend -R JC1/r1 JC1/r2 JC1/aligned
+obi alignpairedend -R JC2/r1 JC2/r2 JC2/aligned
+obi alignpairedend -R JC3/r1 JC3/r2 JC3/aligned
+obi alignpairedend -R JC4/r1 JC4/r2 JC4/aligned
+obi alignpairedend -R JC5/r1 JC5/r2 JC5/aligned
+
+#统计合并情况
+obi stats -a score_norm JC1/aligned
+obi stats -a score_norm JC2/aligned
+obi stats -a score_norm JC3/aligned
+obi stats -a score_norm JC4/aligned
+obi stats -a score_norm JC5/aligned
+
+
+#保留合并分数高的数据
+obi grep -p "sequence['score_norm'] > 0.7" JC1/aligned JC1/goog_aligned
+obi grep -p "sequence['score_norm'] > 0.7" JC2/aligned JC2/goog_aligned
+obi grep -p "sequence['score_norm'] > 0.7" JC3/aligned JC3/goog_aligned
+obi grep -p "sequence['score_norm'] > 0.7" JC4/aligned JC4/goog_aligned
+obi grep -p "sequence['score_norm'] > 0.7" JC5/aligned JC5/goog_aligned
+
+
+#将数据分拆到各个样品中(SLOW)
+obi ngsfilter -t JC1/ngsfile -u JC1/aligned_unidentified JC1/goog_aligned JC1/demultiplex
+obi ngsfilter -t JC2/ngsfile -u JC2/aligned_unidentified JC2/goog_aligned JC2/demultiplex
+obi ngsfilter -t JC3/ngsfile -u JC3/aligned_unidentified JC3/goog_aligned JC3/demultiplex
+obi ngsfilter -t JC4/ngsfile -u JC4/aligned_unidentified JC4/goog_aligned JC4/demultiplex
+obi ngsfilter -t JC5/ngsfile -u JC5/aligned_unidentified JC5/goog_aligned JC5/demultiplex
+
+obi clean_dms JC5.obidms
+
+#去重复
+obi uniq -m sample JC1/demultiplex JC1/dereplicated
+obi uniq -m sample JC2/demultiplex JC2/dereplicated
+obi uniq -m sample JC3/demultiplex JC3/dereplicated
+obi uniq -m sample JC4/demultiplex JC4/dereplicated
+obi uniq -m sample JC5/demultiplex JC5/dereplicated
+
+
+#导出结果并合并
+obi export --fasta-output JC1/dereplicated > JC_dereplicated1.fasta
+obi export --fasta-output JC2/dereplicated > JC_dereplicated2.fasta
+obi export --fasta-output JC3/dereplicated > JC_dereplicated3.fasta
+obi export --fasta-output JC4/dereplicated > JC_dereplicated4.fasta
+obi export --fasta-output JC5/dereplicated > JC_dereplicated5.fasta
+
+cat JC_dereplicated1.fasta JC_dereplicated2.fasta JC_dereplicated3.fasta JC_dereplicated4.fasta JC_dereplicated5.fasta> JC_dereplicated.fasta
+
+obi import JC_dereplicated.fasta JC/dereplicated
+
+
+#把序列抬头多余的信息
+obi annotate -k COUNT -k MERGED_sample JC/dereplicated JC/dereplicated_lighter
+
+#去掉短的和读数少的的序列
+obi grep -p "len(sequence)>=50 and sequence['COUNT']>=10" JC/dereplicated_lighter JC/LONG
+
+#去噪
+obi clean -r 0.05 -H JC/LONG JC/clean_1
+
+#建立导出文件夹
+mkdir JC_result
+
+#导出
+obi export --tab-output JC/clean_1 > JC_result/JC_obi_results.tab
+obi export --fasta-output JC/clean_1 > JC_result/JC_obi.fasta
+
+
+  
+#sintax对比
+vsearch --threads 4 --sintax JC_result/JC_obi.fasta --db /media/dell/eDNA2/HQQ/obitzh/db/coi.fasta --sintax_cutoff 1 --tabbedout JC_result/JC_vsearch.tsv
+
+vsearch --threads 4 --sintax JC_result/JC_obi.fasta --db /media/dell/eDNA1/XKH/2408cssdsy/obi12s/db/12sair_reference.fasta --sintax_cutoff 1 --tabbedout JC_result/JC_vsearch.tsv
+
+vsearch --threads 4 --sintax JC_result/JC_obi.fasta --db /media/dell/eDNA1/LWJ/DJS/s2146g01026_GDDX-20241027-L-01-2024-11-021149/obi/db/12smt.fasta --sintax_cutoff 1 --tabbedout JC_result/JC_vsearch.tsv
+
+
+
+makeblastdb -in 12smt.fasta -parse_seqids -dbtype nucl -blastdb_version 5
+
+# get better hits with smaller word size
+blastn -task blastn -num_threads 16 -evalue 1000 -word_size 7 -max_target_seqs 500 -db /media/dell/eDNA2/HQQ/obitzh/db/coi.fasta -outfmt "6 qseqid sseqid evalue length pident nident score bitscore" -out blast-JC.out -query JC_obi.fasta
+
+blastn -task blastn -num_threads 12 -evalue 1000 -word_size 7 -max_target_seqs 500 -db /media/dell/eDNA1/LWJ/DJS/s2146g01026_GDDX-20241027-L-01-2024-11-021149/obi/db/12smt.fasta -outfmt "6 qseqid sseqid evalue length pident nident score bitscore" -out blast-JC.out -query JC_obi.fasta
+
+
+
+
+
+#join the header
+printf "qseqid\tsseqidLocal\tevalueLocal\tlengthLocal\tpidentLocal\tnidentLocal\tscoreLocal\tbitscoreLocal\n" > headers1
+cat headers1 blast-JC.out > blast-JC.tsv
+
+printf "Accession\tseqID\tsuperkingdom\tphylum\tclass\torder\tfamily\tgenus\tspecies\tsequences\n" > headers2
+cat  headers2 12smt.tsv > 12smth.tsv
+
+
+
+
+sudo
+
+sudo Rscript make-OTU.R --sintax JC_vsearch.tsv --blast blast-JC.tsv --taxonomy coih.tsv --otus JC_obi_results.tab --output tzhcoi_full_OTUs.csv
+
+sudo chmod -R 777 lib1_full_OTUs.csv
+
+

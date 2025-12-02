@@ -22,15 +22,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-# Project specific
-# (Removed Documents/ to enable RAG knowledge base access)
-
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-venv/
-# .env (Allowed for local config)
-.venv
-env/
